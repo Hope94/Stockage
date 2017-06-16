@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
+    <servlet>
+        <servlet-name>MyServlet</servlet-name>
+        <servlet-class>com.example.Nesrine.myapplication.backend.MyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MyServlet</servlet-name>
+        <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+    <servlet>
+        <servlet-name>GetBooks</servlet-name>
+        <servlet-class>com.example.Nesrine.myapplication.backend.GetBooksServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetBooks</servlet-name>
+        <url-pattern>/getBooks</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>PostBook</servlet-name>
+        <servlet-class>com.example.Nesrine.myapplication.backend.PostBookSelvlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PostBook</servlet-name>
+        <url-pattern>/PostBook</url-pattern>
+    </servlet-mapping>
+</web-app>
