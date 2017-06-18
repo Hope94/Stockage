@@ -27,4 +27,20 @@
         <servlet-name>PostBook</servlet-name>
         <url-pattern>/PostBook</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>GetConnexion</servlet-name>
+        <servlet-class>com.example.Nesrine.myapplication.backend.GetConnexionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetConnexion</servlet-name>
+        <url-pattern>/getConnexion</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>GetRendezVous</servlet-name>
+        <servlet-class>com.example.Nesrine.myapplication.backend.GetRendezVousServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetRendezVous</servlet-name>
+        <url-pattern>/getRendezVous</url-pattern>
+    </servlet-mapping>
 </web-app>

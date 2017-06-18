@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DataBaseService {
     public static final String className= "com.mysql.jdbc.Driver";
-    public static final String chaine="jdbc:mysql://localhost:3306/book_db";
+    public static final String chaine="jdbc:mysql://localhost:3306/myhome_db";
     public static final String username="root";
     public static final String password="";
 
@@ -100,6 +100,85 @@ public class DataBaseService {
         return (i!=-1);
 
 
+    }
+    public String getConnexion(String email,String password)
+    {
+
+        String query="select * from user where email=? and mot_de_passe=?";
+        Connection connection = connecter();
+        PreparedStatement st=null;
+        String connected="failed";
+        try {
+            st=connection.prepareStatement(query);
+            st.setString(1,email);
+            st.setString(2,password);
+            ResultSet rs =st.executeQuery();
+            if(rs.next()){
+                connected="ok";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (st!=null){
+            try {
+                st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if(connection!=null)
+        {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return  connected;
+
+    }
+
+    public List<ObjetRendezVous> getRendezVousList(){
+        List<ObjetRendezVous> rendezVousList = new ArrayList<ObjetRendezVous>();
+        String query="select * from rendezvous";
+        Connection connection = connecter();
+        Statement st=null;
+        try {
+            st=connection.createStatement();
+            ResultSet rs=st.executeQuery(query);
+            while (rs.next())
+            {
+                ObjetRendezVous rendezVous=new ObjetRendezVous();
+                rendezVous.setUserName(rs.getString("client_name"));
+                rendezVous.setNomAnn(rs.getString("nomann"));
+                rendezVous.setStatus(rs.getString("etat"));
+                rendezVous.setDate(rs.getString("date"));
+                rendezVous.setHeure(rs.getString("heure"));
+                rendezVous.setRegion(rs.getString("region"));
+                rendezVousList.add(rendezVous);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (st!=null){
+            try {
+                st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if(connection!=null)
+        {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return  rendezVousList;
     }
 
 
