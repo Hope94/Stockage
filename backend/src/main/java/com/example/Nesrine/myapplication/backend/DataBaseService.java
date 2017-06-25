@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import sun.rmi.runtime.Log;
+
 /**
  * Created by Nesrine on 30/04/2017.
  */
@@ -180,6 +182,52 @@ public class DataBaseService {
 
         return  rendezVousList;
     }
+    public List<Logement> getLogement(String type,String region,String typeImage)
+    {
+        List<Logement> list=new ArrayList<Logement>();
+        String query="select id_log,prix,region,lat,long,url from logement  natural join imagelogement where type_log=?  and region=? and type=?";
+        Connection connection = connecter();
+        PreparedStatement st=null;
+        try {
+            st=connection.prepareStatement(query);
+            st.setString(1,type);
+            st.setString(2,region);
+            st.setString(3,typeImage);
+            ResultSet rs =st.executeQuery();
+            while (rs.next()){
+                Logement logement=new Logement();
+                logement.setId(rs.getString("id_log"));
+                logement.setPrix(rs.getInt("prix"));
+                logement.setRegion(rs.getString("region"));
+                logement.setType(rs.getString("type_log"));
+                logement.setLat(rs.getDouble("lat"));
+                logement.setLng(rs.getDouble("long"));
+                logement.setMainImage(rs.getString("url"));
+                list.add(logement);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (st!=null){
+            try {
+                st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if(connection!=null)
+        {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return list;
+
+    }
+
 
 
 }

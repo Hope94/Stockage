@@ -43,4 +43,12 @@
         <servlet-name>GetRendezVous</servlet-name>
         <url-pattern>/getRendezVous</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>GetLogements</servlet-name>
+        <servlet-class>com.example.Nesrine.myapplication.backend.GetLogementsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetLogements</servlet-name>
+        <url-pattern>/getLogements</url-pattern>
+    </servlet-mapping>
 </web-app>
