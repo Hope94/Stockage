@@ -51,4 +51,12 @@
         <servlet-name>GetLogements</servlet-name>
         <url-pattern>/getLogements</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>GetDetailLogement</servlet-name>
+        <servlet-class>com.example.Nesrine.myapplication.backend.GetDetailLogementServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetDetailLogement</servlet-name>
+        <url-pattern>/getDetailLogement</url-pattern>
+    </servlet-mapping>
 </web-app>

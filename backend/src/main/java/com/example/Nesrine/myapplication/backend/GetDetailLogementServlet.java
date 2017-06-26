@@ -11,19 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Nesrine on 24/06/2017.
+ * Created by Nesrine on 26/06/2017.
  */
 
-public class GetLogementsServlet extends HttpServlet {
+public class GetDetailLogementServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String type=req.getParameter("type");
-        String region=req.getParameter("region");
-        String typeImage=req.getParameter("typeImage");
-        List<Logement> logList=new DataBaseService().getLogement(type,region);
+        String id_log=req.getParameter("id_log");
+        Logement logement=new DataBaseService().getDetailLogement("id_log");
         Gson gson=new Gson();
-        resp.getWriter().print(gson.toJson(logList));
+        resp.getWriter().print(gson.toJson(logement));
     }
-
-
 }
+

@@ -182,17 +182,18 @@ public class DataBaseService {
 
         return  rendezVousList;
     }
-    public List<Logement> getLogement(String type,String region,String typeImage)
+    public List<Logement> getLogement(String type,String region)
     {
         List<Logement> list=new ArrayList<Logement>();
-        String query="select id_log,prix,region,lat,long,url from logement  natural join imagelogement where type_log=?  and region=? and type=?";
+        String query="select * from logement  natural join imagelogement where type_log=? and" +
+                " region=? and type=?";
         Connection connection = connecter();
         PreparedStatement st=null;
         try {
             st=connection.prepareStatement(query);
             st.setString(1,type);
             st.setString(2,region);
-            st.setString(3,typeImage);
+            st.setString(3,"main");
             ResultSet rs =st.executeQuery();
             while (rs.next()){
                 Logement logement=new Logement();
@@ -225,6 +226,53 @@ public class DataBaseService {
         }
 
         return list;
+
+    }
+
+    public Logement getDetailLogement(String id_log)
+    {
+        Logement logement=null;
+        String query="select * from logement  natural join imagelogement where type_log=? and type=?";
+        Connection connection = null;
+        PreparedStatement st=null;
+
+        try {
+            connection=connecter();
+            st=connection.prepareStatement(query);
+            st.setString(1,id_log);
+            st.setString(2,"detail");
+            ResultSet rs =st.executeQuery();
+            if (rs.first()) {
+                logement=new Logement();
+                logement.setDescriptif(rs.getString("descriptif"));
+                List<String> listUrls = new ArrayList<String>();
+                // Get detail images of the logemenr
+                while (!(rs.isAfterLast()) && (rs.getString("id_log").equals(id_log))) {
+                    listUrls.add(rs.getString("url"));
+                    rs.next();
+                }
+                logement.setListDetailImages(listUrls.toArray(new String[listUrls.size()]));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (st!=null){
+            try {
+                st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if(connection!=null)
+        {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return logement;
 
     }
 

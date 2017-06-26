@@ -12,6 +12,7 @@ public class Logement {
     private int prix;
     private double lat;
     private double lng;
+    private String descriptif;
     private String mainImage;
     private String[] listDetailImages;
 
@@ -79,4 +80,11 @@ public class Logement {
         this.region = region;
     }
 
+    public String getDescriptif() {
+        return descriptif;
+    }
+
+    public void setDescriptif(String descriptif) {
+        this.descriptif = descriptif;
+    }
 }
