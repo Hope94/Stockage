@@ -18,7 +18,7 @@ public class GetDetailLogementServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id_log=req.getParameter("id_log");
-        Logement logement=new DataBaseService().getDetailLogement("id_log");
+        Logement logement=new DataBaseService().getDetailLogement(id_log);
         Gson gson=new Gson();
         resp.getWriter().print(gson.toJson(logement));
     }

@@ -231,19 +231,18 @@ public class DataBaseService {
 
     public Logement getDetailLogement(String id_log)
     {
-        Logement logement=null;
-        String query="select * from logement  natural join imagelogement where type_log=? and type=?";
-        Connection connection = null;
+        Logement logement=new Logement();
+        logement.setId(id_log);
+        String query="select * from logement  natural join imagelogement where id_log=? and type=?";
+        Connection connection = connecter();
         PreparedStatement st=null;
 
         try {
-            connection=connecter();
             st=connection.prepareStatement(query);
             st.setString(1,id_log);
             st.setString(2,"detail");
             ResultSet rs =st.executeQuery();
             if (rs.first()) {
-                logement=new Logement();
                 logement.setDescriptif(rs.getString("descriptif"));
                 List<String> listUrls = new ArrayList<String>();
                 // Get detail images of the logemenr
