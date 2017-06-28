@@ -59,4 +59,46 @@
         <servlet-name>GetDetailLogement</servlet-name>
         <url-pattern>/getDetailLogement</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>GetDates</servlet-name>
+        <servlet-class>com.example.Nesrine.myapplication.backend.GetDatesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetDates</servlet-name>
+        <url-pattern>/getDates</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>PostStatus</servlet-name>
+        <servlet-class>com.example.Nesrine.myapplication.backend.PostStatusServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PostStatus</servlet-name>
+        <url-pattern>/postStatus</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PostRendezVous</servlet-name>
+        <servlet-class>com.example.Nesrine.myapplication.backend.PostRendezVousServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PostRendezVous</servlet-name>
+        <url-pattern>/postRendezVous</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>PostRate</servlet-name>
+        <servlet-class>com.example.Nesrine.myapplication.backend.PostRateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PostRate</servlet-name>
+        <url-pattern>/postRate</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PostComment</servlet-name>
+        <servlet-class>com.example.Nesrine.myapplication.backend.PostCommentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PostComment</servlet-name>
+        <url-pattern>/postComment</url-pattern>
+    </servlet-mapping>
 </web-app>

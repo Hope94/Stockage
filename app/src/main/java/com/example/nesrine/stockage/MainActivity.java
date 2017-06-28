@@ -1,5 +1,7 @@
 package com.example.nesrine.stockage;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
     }
     public void saveOnDB(View vue){
         EditText isbn=(EditText) findViewById(R.id.isbn);
@@ -24,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         book.setTitre(titre.getText().toString());
         book.setAnnée_edition(année.getText().toString());
         book.setAuteur(auteur.getText().toString());
-       DataBaseHandler dataBaseHandler=new DataBaseHandler(MainActivity.this);
+        DataBaseHandler dataBaseHandler=new DataBaseHandler(MainActivity.this);
         dataBaseHandler.addBook(book);
         Intent intent=new Intent(MainActivity.this,listBook.class);
         startActivity(intent);

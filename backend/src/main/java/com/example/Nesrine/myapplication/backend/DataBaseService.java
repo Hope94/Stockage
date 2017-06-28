@@ -158,6 +158,7 @@ public class DataBaseService {
                 rendezVous.setDate(rs.getString("date"));
                 rendezVous.setHeure(rs.getString("heure"));
                 rendezVous.setRegion(rs.getString("region"));
+                rendezVous.setId_rdv(rs.getString("id_rdv"));
                 rendezVousList.add(rendezVous);
 
             }
@@ -232,7 +233,6 @@ public class DataBaseService {
     public Logement getDetailLogement(String id_log)
     {
         Logement logement=new Logement();
-        logement.setId(id_log);
         String query="select * from logement  natural join imagelogement where id_log=? and type=?";
         Connection connection = connecter();
         PreparedStatement st=null;
@@ -274,6 +274,372 @@ public class DataBaseService {
         return logement;
 
     }
+
+    public DateVisites getDateVisites(String id_log)
+    {
+        DateVisites dates=new DateVisites();
+        String query="select * from annonce natural join disponibilite where id_log=?";
+        Connection connection = connecter();
+        PreparedStatement st=null;
+
+        try {
+            st=connection.prepareStatement(query);
+            st.setString(1,id_log);
+            ResultSet rs =st.executeQuery();
+            if (rs.first()) {
+
+                List<String> listDates = new ArrayList<String>();
+                // Get detail images of the logemenr
+                while (!(rs.isAfterLast()) && (rs.getString("id_log").equals(id_log))) {
+                    listDates.add(rs.getString("date"));
+                    rs.next();
+                }
+                dates.setListDates(listDates);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (st!=null){
+            try {
+                st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if(connection!=null)
+        {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return dates;
+
+    }
+
+    public boolean updateRendezVous(String id_rdv,String status)
+    {
+        String query="update rendezvous set etat=?  where id_rdv=?";
+        Connection con=connecter();
+        PreparedStatement prst=null;
+        int i=-1;
+        try {
+            prst=con.prepareStatement(query);
+            prst.setString(1,status);
+            prst.setString(2,id_rdv);
+            i=prst.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if(con!=null){
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            prst.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (i!=-1);
+
+
+    }
+    public boolean addRendezVous(ObjetRendezVous rendezVous,String id_log,String id_ann,String id_user)
+    {
+        String query="insert into rendezvous values(?,?,?,?,?,?,?,?,?,?)";
+        Connection con=connecter();
+        PreparedStatement prst=null;
+        int i=-1;
+        try {
+            prst=con.prepareStatement(query);
+            prst.setString(1,rendezVous.getId_rdv());
+            prst.setString(2,rendezVous.getUserName());
+            prst.setString(3,id_ann);
+            prst.setString(4,id_user);
+            prst.setString(5,id_log);
+            prst.setString(6,"Invalide");
+            prst.setString(7,rendezVous.getDate());
+            prst.setString(8,rendezVous.getHeure());
+            prst.setString(9,rendezVous.getRegion());
+            prst.setString(10,rendezVous.getNomAnn());
+            i=prst.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if(con!=null){
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            prst.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (i!=-1);
+
+
+    }
+
+    public String getIdAnnByIdLg(String id_log)
+    {
+
+        String query="select * from annonce where id_log=?";
+        Connection connection = connecter();
+        PreparedStatement st=null;
+        String id_ann=null;
+        try {
+            st=connection.prepareStatement(query);
+            st.setString(1,id_log);
+            ResultSet rs =st.executeQuery();
+            if(rs.next()){
+                id_ann=rs.getString("id_ann");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (st!=null){
+            try {
+                st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if(connection!=null)
+        {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return  id_ann;
+
+    }
+
+    public String getNomAnnByIdLg(String id_log)
+    {
+
+        String query="select * from annonce where id_log=?";
+        Connection connection = connecter();
+        PreparedStatement st=null;
+        String nom_ann=null;
+        try {
+            st=connection.prepareStatement(query);
+            st.setString(1,id_log);
+            ResultSet rs =st.executeQuery();
+            if(rs.next()){
+                nom_ann=rs.getString("nom_annonce");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (st!=null){
+            try {
+                st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if(connection!=null)
+        {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return  nom_ann;
+
+    }
+
+    public String getIdUserByIdLg(String id_log)
+    {
+
+        String query="select * from annonce where id_log=?";
+        Connection connection = connecter();
+        PreparedStatement st=null;
+        String id_user=null;
+        try {
+            st=connection.prepareStatement(query);
+            st.setString(1,id_log);
+            ResultSet rs =st.executeQuery();
+            if(rs.next()){
+                id_user=rs.getString("id_user");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (st!=null){
+            try {
+                st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if(connection!=null)
+        {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return  id_user;
+
+    }
+
+    public String getRegionByIdLg(String id_log)
+    {
+
+        String query="select * from logement where id_log=?";
+        Connection connection = connecter();
+        PreparedStatement st=null;
+        String region=null;
+        try {
+            st=connection.prepareStatement(query);
+            st.setString(1,id_log);
+            ResultSet rs =st.executeQuery();
+            if(rs.next()){
+                region=rs.getString("region");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (st!=null){
+            try {
+                st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if(connection!=null)
+        {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return  region;
+
+    }
+
+
+    public String getClientByEmail(String email)
+    {
+
+        String query="select * from user where email=?";
+        Connection connection = connecter();
+        PreparedStatement st=null;
+        String client=null;
+        try {
+            st=connection.prepareStatement(query);
+            st.setString(1,email);
+            ResultSet rs =st.executeQuery();
+            if(rs.next()){
+                client=rs.getString("nom_user");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (st!=null){
+            try {
+                st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if(connection!=null)
+        {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return  client;
+
+    }
+
+    public boolean addRate(String id_log,float note,String email)
+    {
+        String query="insert into rate (note,id_log,email) values(?,?,?)";
+        Connection con=connecter();
+        PreparedStatement prst=null;
+        int i=-1;
+        try {
+            prst=con.prepareStatement(query);
+            prst.setFloat(1,note);
+            prst.setString(2,id_log);
+            prst.setString(3,email);
+            i=prst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if(con!=null){
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            prst.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (i!=-1);
+
+
+    }
+
+    public boolean addComment(String id_log,String comment,String email)
+    {
+        String query="insert into commentaire (commentaire,id_log,email) values(?,?,?)";
+        Connection con=connecter();
+        PreparedStatement prst=null;
+        int i=-1;
+        try {
+            prst=con.prepareStatement(query);
+            prst.setString(1,comment);
+            prst.setString(2,id_log);
+            prst.setString(3,email);
+            i=prst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if(con!=null){
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            prst.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (i!=-1);
+
+
+    }
+
 
 
 
